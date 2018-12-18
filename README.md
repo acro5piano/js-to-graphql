@@ -27,11 +27,21 @@ class GetUserOperation extends QueryOpertaion {
   query = UserQuery
 }
 
+// Create renderer operation instance
 const getUserOperation = new GetUserOperation()
-const gqlString = getUserOperation.render()
 
 // `gqlString` is a plain string, so feel free to tag it
+const gqlString = getUserOperation.render()
+
 console.log(gqlString)
+// =>
+//   query getUser {
+//     user {
+//       id
+//       name
+//       isActive
+//     }
+//   }
 
 // We would like to type this!
 const result: Result<GetUserOperation> = executeGraphql(gqlString)
