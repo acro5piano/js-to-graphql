@@ -55,3 +55,5 @@ const result: Result<GetUserOperation> = executeGraphql(gqlString)
 //   }
 // }
 ```
+
+![image](https://github.com/acro5piano/js-to-graphql/blob/master/screenshot.png)
