@@ -8,11 +8,17 @@ JavaScript class that render GraphQL. Better TypeScript + GraphQL experience.
 import { QueryOpertaion, Query, Field, Result } from 'js-to-graphql'
 import { executeGraphql } from 'some-graphql-request-library'
 
-// Define Field
+// Define Fields
+class BankAccount extends Field {
+  id = Field.number
+  branch = Field.string
+}
+
 class UserField extends Field {
   id = Field.number
   name = Field.string
   isActive = Field.boolean
+  bankAccount = Field.of(BankAccount)
 }
 
 // Define Query
@@ -40,6 +46,10 @@ console.log(gqlString)
 //       id
 //       name
 //       isActive
+//       bankAccount {
+//         id
+//         name
+//       }
 //     }
 //   }
 
