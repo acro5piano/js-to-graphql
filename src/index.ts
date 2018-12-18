@@ -33,15 +33,22 @@ export class Query {
   field!: typeof Field
   variables!: string | string[]
 
+  getVariables() {
+    switch (typeof this.variables) {
+      case 'string':
+        return `(${this.variables}: $${this.variables})`
+      case 'object':
+        const vars = this.variables.map(v => `${v}: $${v}`).join(', ')
+        return `(${vars})`
+      default:
+        return ''
+    }
+  }
+
   render() {
     const field = new this.field()
 
-    const variables =
-      typeof this.variables === 'string'
-        ? `${this.variables}: $${this.variables}`
-        : this.variables.map(v => `${v}: $${v}`)
-
-    return `${this.name}(${variables}) { ${field.render()} }`
+    return `${this.name}${this.getVariables()} { ${field.render()} }`
   }
 }
 
