@@ -7,46 +7,73 @@ const gql = (literals: any) =>
     .replace(/^ /, '')
     .replace(/ $/, '')
 
-class FooOperation extends QueryOpertaion {
-  operationName = 'query foo'
-  query = BarQuery
+class GetUserOperation extends QueryOpertaion {
+  type = QueryOpertaion.query
+  name = 'foo'
+  query = GetUserQuery
 }
 
-class BarQuery extends Query {
+class GetUserQuery extends Query {
   name = 'bar'
-  field = BazField
+  field = BasicUserInfo
+  variables = ['id']
 }
 
-class BazField extends Field {
+class BasicUserInfo extends Field {
   id = Field.number
   name = Field.string
+  isActive = Field.boolean
+  bankAccount = Field.of(BankAccount)
+}
+
+class BankAccount extends Field {
+  id = Field.number
+  bankName = Field.string
+  branch = Field.string
 }
 
 describe('jsToGraphQL', () => {
   it('QueryOperation render GraphQL', () => {
-    const renderer = new FooOperation()
+    const renderer = new GetUserOperation()
     expect(renderer.render()).toEqual(gql`
       query foo {
         bar(id: $id) {
           id
           name
+          isActive
+          bankAccount {
+            id
+            bankName
+            branch
+          }
         }
       }
     `)
   })
 
   it('Query render query', () => {
-    const renderer = new BarQuery()
+    const renderer = new GetUserQuery()
     expect(renderer.render()).toEqual(gql`
         bar(id: $id) {
           id
           name
+          isActive
+          bankAccount {
+            id
+            bankName
+            branch
+          }
         }
       `)
   })
 
   it('Field render filelds', () => {
-    const renderer = new BazField()
-    expect(renderer.render()).toEqual('id name')
+    const renderer = new BasicUserInfo()
+    expect(renderer.render()).toEqual('id name isActive bankAccount { id bankName branch }')
+  })
+
+  it('SubField render filelds', () => {
+    const renderer = new BankAccount()
+    expect(renderer.render()).toEqual('id bankName branch')
   })
 })
