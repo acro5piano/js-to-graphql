@@ -54,5 +54,4 @@ const result: Result<GetUserOperation> = executeGraphql(gqlString)
 //     isActive: boolean
 //   }
 // }
-console.log(result)
 ```
