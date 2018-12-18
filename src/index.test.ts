@@ -1,15 +1,9 @@
 import { QueryOpertaion, Query, Field } from './'
-
-const gql = (literals: any) =>
-  literals[0]
-    .replace(/\n/g, '')
-    .replace(/ +/g, ' ')
-    .replace(/^ /, '')
-    .replace(/ $/, '')
+import { gql } from './test-utils'
 
 class GetUserOperation extends QueryOpertaion {
   type = QueryOpertaion.query
-  name = 'foo'
+  name = 'getUser'
   query = GetUserQuery
 }
 
@@ -36,7 +30,7 @@ describe('jsToGraphQL', () => {
   it('QueryOperation render GraphQL', () => {
     const renderer = new GetUserOperation()
     expect(renderer.render()).toEqual(gql`
-      query foo {
+      query getUser {
         bar(id: $id) {
           id
           name
