@@ -62,6 +62,10 @@ const result: Result<GetUserOperation> = executeGraphql(gqlString)
 //     id: number
 //     name: string
 //     isActive: boolean
+//     bankAccount: {
+//       id: number
+//       name: string
+//     }
 //   }
 // }
 ```
