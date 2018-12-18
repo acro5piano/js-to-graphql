@@ -1,3 +1,5 @@
+[DEPRECATED] Use this library: https://github.com/acro5piano/typed-graphqlify
+
 # js-to-graphql
 
 JavaScript class that render GraphQL. Better TypeScript + GraphQL experience.
